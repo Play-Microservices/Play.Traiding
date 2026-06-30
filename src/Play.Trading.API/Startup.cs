@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Text.Json.Serialization;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
@@ -10,6 +11,7 @@ using Play.Common.Identity;
 using Play.Common.MassTransit;
 using Play.Common.MongoDB;
 using Play.Common.Settings;
+using Play.Trading.API.Entities;
 using Play.Trading.API.StateMachines;
 
 namespace Play.Trading.API;
@@ -27,6 +29,7 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddMongo(Configuration)
+            .AddMongoRepository<CatalogItem>("catalogitems")
             .AddJwtBearerAuthentication();
         AddMassTransit(services);
 
@@ -73,6 +76,7 @@ public class Startup
         services.AddMassTransit(configure =>
         {
             configure.UsingPlayEconomyRabbitMQ();
+            configure.AddConsumers(Assembly.GetEntryAssembly());
             configure.AddSagaStateMachine<PurchaseStateMachine, PurchaseState>()
                 .MongoDbRepository(r =>
                 {
