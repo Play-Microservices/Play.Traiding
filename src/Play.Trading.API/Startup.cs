@@ -23,7 +23,7 @@ public class Startup
         services.AddControllers();
         services.AddSwaggerGen(c =>
         {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Play.Trading.Service", Version = "v1" });
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Play.Trading.API", Version = "v1" });
         });
     }
 
@@ -34,7 +34,7 @@ public class Startup
         {
             app.UseDeveloperExceptionPage();
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Play.Trading.Service v1"));
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Play.Trading.API v1"));
         }
 
         app.UseHttpsRedirection();
